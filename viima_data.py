@@ -1,3 +1,7 @@
+# coding: utf-8
+#
+# Copyright © 2016 Juho Enala
+
 from urllib.request import urlopen
 import json
 import datetime

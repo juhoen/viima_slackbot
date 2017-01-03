@@ -1,3 +1,7 @@
+# coding: utf-8
+#
+# Copyright © 2016 Juho Enala
+
 import os
 
 API_TOKEN = os.environ["SLACK_BOT_TOKEN"]

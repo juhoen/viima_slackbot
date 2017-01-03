@@ -1,3 +1,7 @@
+# coding: utf-8
+#
+# Copyright © 2016 Juho Enala
+
 import os
 from slackclient import SlackClient
 from slackbot.bot import respond_to
