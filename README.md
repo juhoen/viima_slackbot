@@ -6,7 +6,7 @@ Viima Slack bot is a Viima implementation for Slack. It allows user to interract
 ---
 **Installing (on Ubuntu):**
 
-Navigate to viimabot -folder and create virtual environment for Python:
+Navigate to same folder with slack_bot.py file and create virtual environment for Python:
 ```
 virtualenv env
 ```
