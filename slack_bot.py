@@ -25,7 +25,7 @@ def notification_engine():
     # Notification loop. At the moment server doesn't notify client, so program
     # needs to manually check changes every NOTIFY_INTERVAL seconds.
     while True:
-        data = get_data_from_server(ACTIVITY_URL)['results']    # Get user specific data from server
+        data = get_data_from_server(ACTIVITY_URL)['results']  # Get user specific data from server
         current_activities = []
         for item in data:
             current_activities.append(item['id'])
@@ -48,27 +48,27 @@ def notification_engine():
         # Activities_to_notify contains all the activities that needs to be notified.
         if len(activities_to_notify) > 0:
             msg = ""
-            for index in activities_to_notify:      # Loop through activities_to_notify and notify them
+            for index in activities_to_notify:  # Loop through activities_to_notify and notify them
                 for item in data:
                     if item['id'] == index:
                         if item['model'] == "comment":
                             # Comments:
                             if not item['is_attachment']:
                                 msg = ("_*{user}* commented \"{name}\":_\n```{content}```\n"
-                                       .format(user = item['fullname'],
-                                               name = item['name'],
-                                               content = item['content']))
+                                       .format(user=item['fullname'],
+                                               name=item['name'],
+                                               content=item['content']))
                             # Attachments:
                             else:
                                 msg = ("_*{user}* added attachment to \"{name}\"_\n"
-                                       .format(user = item['fullname'],
-                                               name = item['name']))
+                                       .format(user=item['fullname'],
+                                               name=item['name']))
 
                         # Items (new ideas):
                         elif item['model'] == "item":
                             msg = ("_*{user}* added \"{name}\":_"
-                                   .format(user = item['fullname'],
-                                           name = item['name']))
+                                   .format(user=item['fullname'],
+                                           name=item['name']))
 
                             idea_data = get_data_from_server(IDEAS_URL)
                             new_idea = None
@@ -149,7 +149,7 @@ def respond_recap(message, days=1):
     if len(new_ideas) != 0:
 
         message.reply("\n_Viima recap for last {day}_"
-                      .format(day = str(days) + " days" if days > 1 else "day"))
+                      .format(day=str(days) + " days" if days > 1 else "day"))
         best_ideas = get_top_ideas_by_votes(new_ideas, 3)
 
         message.reply("*Here are the top {} most voted ideas:*"
@@ -157,19 +157,19 @@ def respond_recap(message, days=1):
         msg = ""
         for item in best_ideas:
             msg = ("*Votes {votes}*: \"{name}\" created by {user}.\n{url}\n\n"
-                    .format(votes = item['vote_count'],
-                            name = item['name'],
-                            user = item['fullname'],
-                            url = WEBSITE_URL + "?activeItem=" + str(item['id'])))
+                   .format(votes=item['vote_count'],
+                           name=item['name'],
+                           user=item['fullname'],
+                           url=WEBSITE_URL + "?activeItem=" + str(item['id'])))
 
         message.reply(msg)
         message.reply("A total of new {ideas} ideas for last {days}"
-                      .format(ideas = len(best_ideas),
-                              days = str(days) + " days" if days > 1 else "day"))
+                      .format(ideas=len(best_ideas),
+                              days=str(days) + " days" if days > 1 else "day"))
 
     else:
         message.reply("\nNo new activity since {days} days."
-                      .format(days = days))
+                      .format(days=days))
 
 
 @respond_to('^top$', re.IGNORECASE)
@@ -192,11 +192,11 @@ def respond_top(message, top=3):
         for item in ideas:
             count += 1
             msg += ("[{votes} votes] *{count}.* \"{name}\" created by {user}\n{url}\n\n"
-                    .format(votes = item['vote_count'],
-                            count = count,
-                            name = item['name'],
-                            user = item['fullname'],
-                            url = WEBSITE_URL + "?activeItem=" + str(item['id'])))
+                    .format(votes=item['vote_count'],
+                            count=count,
+                            name=item['name'],
+                            user=item['fullname'],
+                            url=WEBSITE_URL + "?activeItem=" + str(item['id'])))
 
         message.reply(msg)
 
@@ -224,13 +224,13 @@ def respond_activity(message, days=1):
             if len(comment) > MAX_COMMENT_LENGTH:
                 comment = comment[:MAX_COMMENT_LENGTH] + "..."
             msg += ("\n*{user}* commented \"{name}\"\n_{comment}_\n"
-                    .format(user = item['fullname'],
-                            name = item['name'],
-                            comment = comment))
+                    .format(user=item['fullname'],
+                            name=item['name'],
+                            comment=comment))
         elif item['model'] == "item":
             msg += ("\n*{user}* added new item \"{name}\"\n"
-                    .format(user = item['fullname'],
-                            name = item['name']))
+                    .format(user=item['fullname'],
+                            name=item['name']))
     message.reply(msg)
 
 
@@ -252,9 +252,9 @@ def respond_show(message, title=None):
 
         if idea is not None:
             msg += ("```\n{name}\n\n{descr}\n\n```\n_Idea by {user}_\n"
-                    .format(name = idea['name'],
-                            descr = idea['description'],
-                            user = idea['fullname']))
+                    .format(name=idea['name'],
+                            descr=idea['description'],
+                            user=idea['fullname']))
 
             if idea['comment_count'] == 0:
                 msg += "_This item has no comments yet..._"
@@ -264,9 +264,9 @@ def respond_show(message, title=None):
                     item = data[len(data) - 1 - i]
                     msg += "--------------------------------------------"
                     msg += ("\n*{user}*:\n{content}\n{votes}\n"
-                            .format(user = item['fullname'],
-                                    content = item['content'],
-                                    votes = "_Votes: " + str(item['upvote_count']) + "_" if item['upvote_count'] > 0 else ""))
+                            .format(user=item['fullname'],
+                                    content=item['content'],
+                                    votes="_Votes: " + str(item['upvote_count']) + "_" if item['upvote_count'] > 0 else ""))
                 msg += "--------------------------------------------"
         else:
             msg = "No item _{}_ found.".format(title)
@@ -297,9 +297,9 @@ def respond_contributors(message, top=5):
             count += 1
             msg += "--------------------------------------------"
             msg += ("\n*{count}.* - {user} - _{points} points_\n"
-                    .format(count = count,
-                            user = item['fullname'],
-                            points = item['points']))
+                    .format(count=count,
+                            user=item['fullname'],
+                            points=item['points']))
         msg += "--------------------------------------------"
     message.reply(msg)
 
