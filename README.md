@@ -20,11 +20,7 @@ source env/bin/activate
 
 Install requirements:
 ```
-pip install requirements.txt
-```
-In case of getting error "No matching distribution found for requirements", try:
-```
-pip install --upgrade -r requirements.txt
+pip install -r requirements.txt
 ```
 ---
 
